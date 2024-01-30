@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import HeaderForSignup from "./HeaderForSignup";
-import {useState} from "react"
+import {useState} from "react";
+import Spinner from "./Spinner";
+
 
 function SignToNetwork() {
 
   const [email, setEmail] = useState();
+  const [errorMessage, setErrorMessage] = useState("")
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
 
    const handleEmail = (event) => {
      setEmail(event.target.value);
@@ -14,6 +18,7 @@ function SignToNetwork() {
      setPassword(event.target.value);
    };
   const handleLogin = async () => {
+    setLoading(true)
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -26,29 +31,34 @@ function SignToNetwork() {
 
     console.log(requestOptions);
     // setLoading(true); // start progress spinner
-    fetch(
-      "http://nubeero-deployment-server.uksouth.cloudapp.azure.com:9009/api/Eclat/user/login",
-      requestOptions
-    )
+    fetch("http://172.160.249.253:9009/api/Eclat/user/login", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        console.log(data.status);
+        console.log(data.message);
         console.log(data.data.id);
+        console.log();
+        setErrorMessage(data.status);
 
         if (data.status === "success") {
           localStorage.setItem("userId", data.data.id); // Save the id to localStorage
 
           const redirectUrl = `/homeforapplicant`;
+          setLoading(false);
 
           window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
+        } else {
+          // setErrorMessage(data.message)
+          console.log(errorMessage);
         }
       })
       .catch((err) => {
         console.log(err.message);
+        setLoading(false);
         // setLoading(false); // stop progress spinner
       });
   };
+  console.log(errorMessage)
   return (
     <>
       <div className=" bg-[#fff] w-[100%] h-[130vh]">
@@ -56,10 +66,18 @@ function SignToNetwork() {
         <div className="pt-[7%] 1halfxl:ml-[28%] 1halfxl:pt-[100px] 820xxl:ml-[140px] 820xxl:pt-[150px] pb-[20px] ml-[30%] 3xl:ml-[33%] 1xl:pt-[15%] 3xl:pt-[10%] 4xl:ml-[35%] 6xl:ml-[33%] 5xl:ml-[38%]">
           <div className="w-[512px]  h-[636px] ">
             <div className=" pt-5 ">
-              <h4 className=" text-[30px] text-center text-[#1E2757] ">Sign in to the Network</h4>
+              <h4 className=" text-[30px] text-center text-[#1E2757] ">
+                Sign in to the Network
+              </h4>
               <div className=" w-[420px]   mt-[20px] mb-[20px] h-[50px]  border-[#DCDDE5]  ml-[50px]   rounded-[5px]  border-[1px] ">
                 <div className=" w-[230px] ml-[90px] h-[50px] flex items-center justify-evenly">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M22.5006 12.2336C22.5006 11.3702 22.4291 10.7402 22.2744 10.0869H12.2148V13.9835H18.1196C18.0006 14.9519 17.3577 16.4102 15.9291 17.3902L15.909 17.5207L19.0897 19.9354L19.3101 19.9569C21.3339 18.1253 22.5006 15.4302 22.5006 12.2336Z"
                       fill="#4285F4"
@@ -77,26 +95,49 @@ function SignToNetwork() {
                       fill="#EB4335"
                     />
                   </svg>
-                  <h3 className=" text-[#97A6C6] text-[14px] ">Sign up with Google</h3>
+                  <h3 className=" text-[#97A6C6] text-[14px] ">
+                    Sign up with Google
+                  </h3>
                 </div>
               </div>
               <div className="w-[466px] rounded-[4px] mt-[20px] items-center flex justify-between">
-                <h3 className=" w-[200px] border-[1px] h-[0px] ml-[50px] border-[#DCDDE5] ">{/* intentional break */}</h3>
-                <h4 className=" text-[#181819] m-[7px] text-opacity-[42%] text-[14px]">OR</h4>
-                <h3 className=" w-[200px] border-[1px] h-[0px] border-[#DCDDE5] ">{/* intentional break */}</h3>
+                <h3 className=" w-[200px] border-[1px] h-[0px] ml-[50px] border-[#DCDDE5] ">
+                  {/* intentional break */}
+                </h3>
+                <h4 className=" text-[#181819] m-[7px] text-opacity-[42%] text-[14px]">
+                  OR
+                </h4>
+                <h3 className=" w-[200px] border-[1px] h-[0px] border-[#DCDDE5] ">
+                  {/* intentional break */}
+                </h3>
               </div>
               <form autoComplete="on" className="ml-[3rem] mt-7" action="">
                 <label className=" text-[16px] text-[#1E2757]" htmlFor="CEmail">
                   Email Address
                 </label>
                 <br />
-                <input required className=" w-[420px] mt-[11px]  mb-[15px] h-[50px] pl-[14px] border-[#DCDDE5] outline-none rounded-[5px]  border-[1px]   " type="email" placeholder="" value={email} onChange={handleEmail}/>
+                <input
+                  required
+                  className=" w-[420px] mt-[11px]  mb-[15px] h-[50px] pl-[14px] border-[#DCDDE5] outline-none rounded-[5px]  border-[1px]   "
+                  type="email"
+                  placeholder=""
+                  value={email}
+                  onChange={handleEmail}
+                />
                 <br />
                 <label className=" text-[16px]  text-[#1E2757]" htmlFor="cname">
                   Password
                 </label>
+                {errorMessage}
                 <br />
-                <input required className=" w-[420px] mt-[11px]  mb-[15px] h-[50px] pl-[14px] border-[#DCDDE5] outline-none rounded-[5px]  border-[1px]   " type="password" placeholder="" value={password} onChange={handlePassword}/>
+                <input
+                  required
+                  className=" w-[420px] mt-[11px]  mb-[15px] h-[50px] pl-[14px] border-[#DCDDE5] outline-none rounded-[5px]  border-[1px]   "
+                  type="password"
+                  placeholder=""
+                  value={password}
+                  onChange={handlePassword}
+                />
                 <br />
                 <Link
                   onClick={() => {
@@ -105,7 +146,9 @@ function SignToNetwork() {
                   to="/forgot-password"
                 >
                   <div className="w-[420px] flex justify-end">
-                    <h3 className=" text-[#38761E] text-[14px]">Forgot Password</h3>
+                    <h3 className=" text-[#38761E] text-[14px]">
+                      Forgot Password
+                    </h3>
                   </div>
                 </Link>
                 {/* <Link
@@ -115,10 +158,20 @@ function SignToNetwork() {
                   className=""
                   to="/resourcedetails"
                 > */}
-                  <div className="mt-[20px] tracking-[2px] w-[420px] rounded-[8px] h-[50px] bg-[#38761E] text-center pt-[11px] opacity-90 text-[#fff]" onClick={handleLogin}>
+                <div className="button-container">
+                  <div
+                    className="button"
+                    onClick={handleLogin}
+                    style={{ cursor: "pointer" }}
+                  >
                     <h1>Sign In</h1>
+                    {loading && <Spinner />}
                   </div>
+                </div>
                 {/* </Link> */}
+                {errorMessage && (
+                  <p className="error-message">{errorMessage}</p>
+                )}
               </form>
               <h1 className=" text-center text-[14px] tracking-[1px] mt-4 text-[#121D0E]  ">
                 Don’t have an account?{" "}

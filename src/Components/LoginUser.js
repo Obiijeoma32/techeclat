@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import HeaderForSignup from "./HeaderForSignup";
+import Spinner from "./Spinner";
 
 
 
@@ -14,6 +15,9 @@ function LoginUser() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
+  const [errorMessage, setErrorMessage] =useState("");
+  const [loading, setLoading] = useState(false);
+
    const handleFirstName = (event) => {
      setFirstName(event.target.value);
    };
@@ -31,6 +35,8 @@ function LoginUser() {
    };
 
   const handleSendCoverageClick = async () => {
+setLoading(true)
+   
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,29 +51,30 @@ function LoginUser() {
 
     console.log(requestOptions);
     // setLoading(true); // start progress spinner
-    fetch(
-      "http://nubeero-deployment-server.uksouth.cloudapp.azure.com:9009/api/Eclat/user/signUp",
-      requestOptions
-    )
+    fetch("http://172.160.249.253:9009/api/Eclat/user/signUp", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        console.log(data.id);
+        console.log(data.message);
+        setErrorMessage(data.message);
+        console.log(data.data.id);
 
-         if (data.id !== null) {
-           localStorage.setItem("userId", data.id); // Save the id to localStorage
+        if (data.id !== null) {
+          localStorage.removeItem("userId");
+          localStorage.setItem("userId", data.data.id); // Save the id to localStorage
 
-           const redirectUrl = `/resourcedetails`;
-
-           window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
-         }
-
-  
+          const redirectUrl = `/resourcedetails`;
+          setLoading(false);
+          window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
+        } else if (data.message === "Failed to send verification email") {
+          console.log(errorMessage);
+        }
       })
       .catch((err) => {
         console.log(err.message);
-        // setLoading(false); // stop progress spinner
+        setLoading(false); // stop progress spinner
       });
+    
   };
 
   return (
@@ -235,12 +242,17 @@ function LoginUser() {
                   </label>
                 </div>
                 {/* <Link className="" to="/signintonetwork"> */}
-                <div
-                  className="mt-[30px] tracking-[2px] 3xxl:w-[350px] md:w-[420px] rounded-[8px] h-[50px] bg-[#568B3F] text-center pt-[11px] opacity-90 text-[#fff]"
-                  onClick={handleSendCoverageClick}
-                >
-                  <h1>Register</h1>
+                <div className="button-container">
+                  <div
+                    className="button"
+                    onClick={handleSendCoverageClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <h1>Sign In</h1>
+                    {loading && <Spinner />}
+                  </div>
                 </div>
+               
                 {/* </Link> */}
               </form>
               <h1 className=" text-center text-[14px] tracking-[1px] mt-4 text-[#121D0E]  ">

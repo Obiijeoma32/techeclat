@@ -39,6 +39,7 @@ import Otp from "./Components/Otp";
 import PageForTalentRequest from "./Components/PageForTalentRequest";
 import PageForTalentRequest2 from "./Components/PageForTalentRequest2";
 import PageForTalentRequest3 from "./Components/PageForTalentRequest3";
+import Spinner from "./Components/Spinner";
 import "./App.css";
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<Dashboard />} />
           <Route path="/business" element={<Business />} />
+          <Route path="/spinner" element={<Spinner/>}/>
           <Route path="/enterprise" element={<Enterprise />} />
           <Route path="/techexpert" element={<TechExpert />} />
           <Route path="/jobs" element={<Jobs />} />

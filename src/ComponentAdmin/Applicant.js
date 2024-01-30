@@ -41,7 +41,7 @@ function Applicant() {
   // }
 
   useEffect(() => {
-    fetch(`http://nubeero-deployment-server.uksouth.cloudapp.azure.com:9009/api/Eclat/user/all`)
+    fetch(`http://172.160.249.253:9009/api/Eclat/user/all`)
       .then((response) => response.json())
       .then((data) => {
         //  console.log(data);

@@ -41,28 +41,24 @@ function LoginAdmin() {
 
      console.log(requestOptions);
      // setLoading(true); // start progress spinner
-     fetch(
-       `http://nubeero-deployment-server.uksouth.cloudapp.azure.com:9009/api/Eclat/admin/login`,
-       requestOptions
-     )
+     fetch(`http://172.160.249.253:9009/api/Eclat/admin/login`, requestOptions)
        .then((response) => response.json())
        .then((data) => {
          console.log(data);
-       
 
-         if (data.message === "login successful"){
+         if (data.message === "login successful") {
            const redirectUrl = `/applicant`;
 
-              window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
+           window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
          }
 
-        //  if (data.status === "success") {
-        //    localStorage.setItem("userId", data.data.id); // Save the id to localStorage
+         //  if (data.status === "success") {
+         //    localStorage.setItem("userId", data.data.id); // Save the id to localStorage
 
-        //    const redirectUrl = `/homeforapplicant`;
+         //    const redirectUrl = `/homeforapplicant`;
 
-        //    window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
-        //  }
+         //    window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
+         //  }
        })
        .catch((err) => {
          console.log(err.message);

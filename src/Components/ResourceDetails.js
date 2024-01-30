@@ -133,7 +133,7 @@ function ResourceDetails() {
     console.log(requestOptions);
     // setLoading(true); // start progress spinner
     fetch(
-      `http://nubeero-deployment-server.uksouth.cloudapp.azure.com:9009/api/Eclat/user/${userId}/signUp2`,
+      `http://172.160.249.253:9009/api/Eclat/user/${userId}/signUp2`,
       requestOptions
     )
       .then((response) => response.json())
@@ -141,7 +141,6 @@ function ResourceDetails() {
         console.log(data);
 
         if (data.mainService !== null) {
-
           const redirectUrl = `/resourcedetails/resourcesdetails2`;
 
           window.location.href = redirectUrl; // Redirect to "/resourcedetails" page
@@ -243,7 +242,6 @@ function ResourceDetails() {
               styles={customStyles}
               className=" mb-[20px] 820xxl:w-[471px] 3xxl:w-[300px] w-[471px] h-[50px]  mt-[11px] text-[#7D90B8]  outline-none  2xl:w-[900px] "
               options={years}
-              
               value={years.find((option) => option.value === expertiseLevel)}
               onChange={handleExpertiseLevel}
             />
@@ -304,6 +302,7 @@ function ResourceDetails() {
           <h1
             className=" w-[471px] 820xxl:w-[471px] 3xxl:w-[300px] h-[50px] rounded-[5px] bg-[#38761D] pt-[15px] opacity-95 text-[#fff] text-center tracking-[2px] text-[14px] font-[400]  "
             onClick={handleSign2Click}
+            style={{ cursor: "pointer" }}
           >
             Continue
           </h1>

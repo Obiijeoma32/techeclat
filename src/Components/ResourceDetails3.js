@@ -45,7 +45,10 @@ function ResourceDetails3() {
     console.log(userId);
     console.log(requestOptions);
     // setLoading(true); // start progress spinner
-    fetch(`http://nubeero-deployment-server.uksouth.cloudapp.azure.com:9009/api/Eclat/user/${userId}/signUp4`, requestOptions)
+    fetch(
+      `http://172.160.249.253:9009/api/Eclat/user/${userId}/signUp4`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -67,11 +70,18 @@ function ResourceDetails3() {
       <div className=" h-[200vh] 3xxl:mt-[10%] 5xl:mt-[-5%] 820xxl:mt-[0] flex 5xl:ml-[5%]">
         <SideBar />
         <div className="5xl:ml-[25rem] 4xl:ml-[24rem] mt-[12%] 3xxl:ml-[1rem] 820xxl:ml-[16rem] ml-[25rem] 1xl:ml-[22rem]">
-          <h1 className=" 3xxl:w-[300px] 820xxl:w-[600px] text-[#38761D] text-[30px] font-[600] opacity-80 ">Kindly fill in the details</h1>
-          <p className=" 3xxl:w-[300px] 820xxl:w-[500px] text-[#7D90B8] text-[18px] font-[300] mt-[14px] 5xl:w-[1220px] 4xl:w-[920px] ">Please fill in the details below so we can get in touch with you</p>
+          <h1 className=" 3xxl:w-[300px] 820xxl:w-[600px] text-[#38761D] text-[30px] font-[600] opacity-80 ">
+            Kindly fill in the details
+          </h1>
+          <p className=" 3xxl:w-[300px] 820xxl:w-[500px] text-[#7D90B8] text-[18px] font-[300] mt-[14px] 5xl:w-[1220px] 4xl:w-[920px] ">
+            Please fill in the details below so we can get in touch with you
+          </p>
 
           <form className="mt-7" action="">
-            <label className=" 3xxl:w-[200px] text-[16px] text-[#1E2757]" htmlFor="company">
+            <label
+              className=" 3xxl:w-[200px] text-[16px] text-[#1E2757]"
+              htmlFor="company"
+            >
               What is the name of your College/University ?
             </label>
 
@@ -112,7 +122,10 @@ function ResourceDetails3() {
             <br />
             <div className=" flex 3xxl:w-[320px] 4xl:w-[900px] 820xxl:w-[471px] 5xl:w-[900px] justify-between w-[471px]">
               <div>
-                <label className=" 3xxl:w-[100px]  text-[16px] text-[#1E2757]" htmlFor="period of employment">
+                <label
+                  className=" 3xxl:w-[100px]  text-[16px] text-[#1E2757]"
+                  htmlFor="period of employment"
+                >
                   Year of starting ?
                 </label>
                 <br />
@@ -126,7 +139,10 @@ function ResourceDetails3() {
               </div>
               <br />
               <div>
-                <label className=" text-[16px] 3xxl:w-[100px] text-[#1E2757]" htmlFor="period of employment">
+                <label
+                  className=" text-[16px] 3xxl:w-[100px] text-[#1E2757]"
+                  htmlFor="period of employment"
+                >
                   Year of graduation ?
                 </label>
                 <br />
@@ -149,7 +165,11 @@ function ResourceDetails3() {
             className="mt-[40px]"
             to="/homeforapplicant"
           > */}
-          <h1 className="3xxl:w-[300px] 820xxl:w-[471px] w-[471px] h-[50px] rounded-[5px] bg-[#38761D] pt-[15px] opacity-95 text-[#fff] text-center tracking-[2px] text-[14px] font-[400]  " onClick={handleSign3Click}>
+          <h1
+            className="3xxl:w-[300px] 820xxl:w-[471px] w-[471px] h-[50px] rounded-[5px] bg-[#38761D] pt-[15px] opacity-95 text-[#fff] text-center tracking-[2px] text-[14px] font-[400]  "
+            onClick={handleSign3Click}
+            style={{ cursor: "pointer" }}
+          >
             Continue
           </h1>
           {/* </Link> */}
